@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Java Scientific Calculator</title>
+    <link rel="stylesheet" th:href="@{/css/calculator.css}">
+</head>
+<body>
+    <h1>Java Scientific Calculator</h1>
+    <form th:action="@{/calculate}" method="post" class="calculator" onsubmit="return handleSubmit(event)">
+        <input type="text" name="display" readonly th:value="${result}" style="grid-column: 1 / span 5; height: 50px;">
+        <input type="hidden" name="operator" value="">
+        <button type="button" onclick="addToDisplay('7')">지수</button>
+        <button type="button" onclick="addToDisplay('7')">로그</button>
+        <button type="button" onclick="addToDisplay('7')">ln</button> <!--자연로그-->
+        <button type="button" onclick="addToDisplay('7')">미분</button>
+        <button type="button" onclick="addToDisplay('7')">∫</button>
+        <button type="button" onclick="addToDisplay('7')">(-)</button>
+        <button type="button" onclick="addToDisplay('7')">√</button> <!--루트-->
+        <button type="button" onclick="addToDisplay('sin')">sin</button>
+        <button type="button" onclick="addToDisplay('7')">cos</button>
+        <button type="button" onclick="addToDisplay('7')">tan</button>
+        <button type="button" onclick="addToDisplay('7')">7</button>
+        <button type="button" onclick="addToDisplay('8')">8</button>
+        <button type="button" onclick="addToDisplay('9')">9</button>
+        <button type="button" id="delButton">del</button>
+        <button type="reset" onclick="resetState()">AC</button>
+        <button type="button" onclick="addToDisplay('4')">4</button>
+        <button type="button" onclick="addToDisplay('5')">5</button>
+        <button type="button" onclick="addToDisplay('6')">6</button>
+        <button type="button" onclick="setOperator('*')">*</button>
+        <button type="button" onclick="setOperator('/')">/</button>
+        <button type="button" onclick="addToDisplay('1')">1</button>
+        <button type="button" onclick="addToDisplay('2')">2</button>
+        <button type="button" onclick="addToDisplay('3')">3</button>
+        <button type="button" onclick="setOperator('+')">+</button>
+        <button type="button" onclick="setOperator('-')">-</button>
+        <button type="button" onclick="addToDisplay('0')">0</button>
+        <button type="button" onclick="addDecimal()">.</button>
+        <button type="button" onclick="setOperator('^')">^</button>
+        <button type="submit" style="grid-column: 4 / span 2;">=</button>
+    </form>
+    <script th:src="@{/js/calculator.js}"></script>
+</body>
+</html>
