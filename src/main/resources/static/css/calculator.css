@@ -1,0 +1,12 @@
+body {
+    padding-left: 15%;
+    padding-right: 15%;
+}
+.calculator {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 10px;
+}
+.calculator button {
+    height: 50px;
+}
