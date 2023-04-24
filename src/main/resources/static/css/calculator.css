@@ -5,8 +5,41 @@ body {
 .calculator {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-gap: 10px;
+    grid-gap: 5px;
 }
-.calculator button {
-    height: 50px;
+
+#result-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    border: 1px solid #ccc;
+    padding: 0px 5px 0px 5px;
+    box-sizing: border-box;
+    font-size: 18px;
+    grid-column: 1 / span 4;
+    grid-row: 1;
+    height: 80px;
+}
+#calculate-btn{
+    grid-column: 5 / span 0.5;
+    height: 80px;
+}
+
+#expression, #result {
+    /*margin: 0;*/
+    padding: 0;
+    border: 0;
+    height: 50%;
+    width: 100%;
+    color: #888;
+    font-size: large;
+}
+
+.half-btn{
+    width: 50%;
+}
+
+button{
+    font-size: x-large;
 }

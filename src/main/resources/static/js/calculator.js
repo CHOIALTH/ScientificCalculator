@@ -1,68 +1,66 @@
-let display = document.querySelector("input[name='display']");
-let operatorInput = document.querySelector("input[name='operator']");
-let operatorSet = false;
-let resultDisplayed = false;
-let decimalAdded = false;
+const expressionElement = document.querySelector('#expression');
+
+function handleSubmit(event) {
+    event.preventDefault();
+    const formattedExpressionInput = document.querySelector('input[name="formattedExpression"]');
+    const formattedExpression = expressionElement.value
+        .replace(/sin\(/g, "sin ")
+        .replace(/cos\(/g, "cos ")
+        .replace(/tan\(/g, "tan ")
+        .replace(/abs\(/g, "abs ")
+        .replace(/round\(/g, "round ")
+        .replace(/log\(/g, "log ")
+        .replace(/ln\(/g, "ln ")
+        .replace(/\^/g, " ^ ")
+        .replace(/\+/g, " + ")
+        .replace(/-/g, " - ")
+        .replace(/\*/g, " * ")
+        .replace(/\//g, " / ")
+        .replace(/\(/g, " ( ")
+        .replace(/\)/g, " ) ");
+    formattedExpressionInput.value = formattedExpression;
+    event.target.submit();
+}
 
 function addToDisplay(value) {
-    if (resultDisplayed) {
-        display.value = '';
-        resultDisplayed = false;
-    }
-
-    if (operatorSet) {
-        display.value += ' ' + value;
-        operatorSet = false;
+    if (['sin(', 'cos(', 'tan(', 'abs(', 'round(', 'log(', 'ln('].some(op => expressionElement.value.endsWith(op))) {
+        expressionElement.value += value;
+    } else if (['sin', 'cos', 'tan', 'abs', 'round', 'log', 'ln'].includes(value)) {
+        expressionElement.value += value + '(';
     } else {
-        display.value += value;
+        expressionElement.value += value;
     }
 }
 
+
 function setOperator(operator) {
-    if (!resultDisplayed && !operatorSet) {
-        operatorInput.value = operator;
-        operatorSet = true;
-        display.value += ' ' + operator;
-        decimalAdded = false;
-    }
+    expressionElement.value += operator;
 }
 
 function addDecimal() {
-    if (!decimalAdded) {
-        addToDisplay('.');
-        decimalAdded = true;
+    if (!expressionElement.value.includes('.')) {
+        expressionElement.value += '.';
     }
 }
 
 function resetState() {
-    operatorSet = false;
-    resultDisplayed = false;
-    decimalAdded = false;
+    const resultElement = document.querySelector('.result');
+    expressionElement.value = '';
+    resultElement.value = '';
+
 }
 
-function handleSubmit(event) {
-    if (operatorSet) {
-        event.preventDefault();
-        alert("Please input a valid expression.");
+function addToDisplayWithParentheses(value) {
+    expressionElement.value += `${value}()`;
+}
+
+document.getElementById('delButton').addEventListener('click', () => {
+    expressionElement.value = expressionElement.value.slice(0, -1);
+});
+// 이 연산들을 클릭시 ()와 함께 출력됩니다.
+document.querySelectorAll('button[type="button"]').forEach(button => {
+    const value = button.value;
+    if (['sin', 'cos', 'tan', 'abs', 'round', 'log', 'ln'].includes(value)) {
+        button.setAttribute('onclick', `addToDisplayWithParentheses('${value}')`);
     }
-    return !operatorSet;
-}
-// 음수 연산 활성화
-document.addEventListener("DOMContentLoaded", function() {
-    const negButton = document.querySelector("button[value='neg']");
-
-    // 음수 버튼에 클릭 이벤트 리스너를 추가합니다.
-    negButton.addEventListener("click", function(event) {
-        // 기본 폼 제출 동작을 취소합니다.
-        event.preventDefault();
-
-        // 현재 화면의 값을 가져옵니다.
-        const display = document.querySelector("#display");
-        const currentValue = parseFloat(display.value);
-
-        // 값이 숫자인지 확인하고 음수로 변환합니다.
-        if (!isNaN(currentValue)) {
-            display.value = -currentValue;
-        }
-    });
 });
