@@ -1,61 +1,42 @@
 package com.example.ScientificCalculator.Controller;
 
+import com.example.ScientificCalculator.Service.CalculatorService;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
+
 
 @Controller
 public class CalculatorController {
-    // 계산기 메인 호출
+    private final CalculatorService calculator = new CalculatorService();
+
     @GetMapping("/")
-    public String calculatorMain(){
-            return "calculator";
-        }
-
-    @PostMapping("/calculate")
-    public String calculate(@RequestParam String display, @RequestParam String operator, Model model) {
-        double result = 0;
-        String[] operands = display.split("\\" + operator);
-
-        if (operands.length == 2) {
-            double operand1 = Double.parseDouble(operands[0]);
-            double operand2 = Double.parseDouble(operands[1]);
-
-            switch (operator) {
-                case "+":
-                    result = operand1 + operand2;
-                    break;
-                case "-":
-                    result = operand1 - operand2;
-                    break;
-                case "*":
-                    result = operand1 * operand2;
-                    break;
-                case "/":
-                    result = operand1 / operand2;
-                    break;
-                case "^":
-                    result = Math.pow(operand1, operand2);
-                    break;
-            }
-        }
-
-        model.addAttribute("result", formatResult(result));
-
+    public String calculatorMain(Model model){
+        model.addAttribute("expression", "");
+        model.addAttribute("result", null);
         return "calculator";
     }
-    private String formatResult(double result) {
-        // 지수표기법으로 출력되는 것 방지
-        DecimalFormat df = new DecimalFormat("#.##########");
-        if (result % 1 == 0) {
-            return String.format("%.0f", result);
-        } else {
-            return df.format(result);
+
+    @ResponseBody
+    @PostMapping(value = "/calculate", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String, Object>> calculate(@RequestBody Map<String, String> requestData) {
+        String formattedExpression = requestData.get("formattedExpression");
+        Map<String, Object> responseBody = new HashMap<>();
+        try {
+            System.out.println("Expression: " + formattedExpression);
+            Double result = calculator.calculate(formattedExpression);
+            responseBody.put("result", result); // 'calculationResult'를 다시 'result'로 변경해야 합니다.
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+            responseBody.put("error", e.getMessage());
         }
+        return ResponseEntity.ok(responseBody);
     }
+
 
 }
