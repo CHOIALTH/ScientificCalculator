@@ -1,8 +1,6 @@
 const expressionElement = document.querySelector('#expression');
 
-function handleSubmit(event) {
-    event.preventDefault();
-    const formattedExpressionInput = document.querySelector('input[name="formattedExpression"]');
+async function handleSubmit(event) {
     const formattedExpression = expressionElement.value
         .replace(/sin\(/g, "sin ")
         .replace(/cos\(/g, "cos ")
@@ -18,12 +16,37 @@ function handleSubmit(event) {
         .replace(/\//g, " / ")
         .replace(/\(/g, " ( ")
         .replace(/\)/g, " ) ");
-    formattedExpressionInput.value = formattedExpression;
-    event.target.submit();
+    console.log('Formatted expression:', formattedExpression);
+
+    const requestData = {
+        formattedExpression: formattedExpression,
+    };
+    console.log('Request data:', requestData);
+
+    const response = await fetch('/calculate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        if (data.error) {
+            console.error('Calculation error:', data.error);
+            document.querySelector('#result').value = "Error";
+        } else {
+            document.querySelector('#result').value = data.result !== undefined ? data.result : "Error";
+        }
+    } else {
+        console.error('Failed to calculate:', response.status, response.statusText);
+    }
 }
 
+
 function addToDisplay(value) {
-    if (['sin(', 'cos(', 'tan(', 'abs(', 'round(', 'log(', 'ln('].some(op => expressionElement.value.endsWith(op))) {
+    if (['(', ')', 'sin(', 'cos(', 'tan(', 'abs(', 'round(', 'log(', 'ln('].some(op => expressionElement.value.endsWith(op))) {
         expressionElement.value += value;
     } else if (['sin', 'cos', 'tan', 'abs', 'round', 'log', 'ln'].includes(value)) {
         expressionElement.value += value + '(';
@@ -44,10 +67,10 @@ function addDecimal() {
 }
 
 function resetState() {
-    const resultElement = document.querySelector('.result');
+    const resultElement = document.querySelector('#result');
     expressionElement.value = '';
     resultElement.value = '';
-
+    location.href = "/";
 }
 
 function addToDisplayWithParentheses(value) {
@@ -64,3 +87,8 @@ document.querySelectorAll('button[type="button"]').forEach(button => {
         button.setAttribute('onclick', `addToDisplayWithParentheses('${value}')`);
     }
 });
+// 페이지의 DOM이 완전히 로드된 후 실행됨
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.calculator').addEventListener('submit', handleSubmit);
+});
+

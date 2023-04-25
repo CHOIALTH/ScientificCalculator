@@ -7,12 +7,13 @@
 </head>
 <body>
     <h1>Java Scientific Calculator</h1>
-    <form th:action="@{/calculate}" method="post" class="calculator" onsubmit="return handleSubmit(event)">
+    <form method="post" class="calculator" onsubmit="event.preventDefault(); handleSubmit(event);">
         <!-- 결과값 출력 -->
         <div th:id="result-box">
-            <input th:id="expression" th:name="expression" placeholder="이 곳에 수식을 입력해주세요">
-            <input th:id="result" th:value="${result}" readonly>
-            <!--<input type="hidden" name="operator" value="">-->
+            <input id="expression" name="expression" placeholder="이 곳에 수식을 입력해주세요" th:value="${expression}">
+            <!--result의 값이 존재하는 경우에만 해당 값을 출력 / 그렇지 않을경우 공백처리-->
+<!--            <input id="result" th:attr="value=${result != null ? result : ''}" readonly>-->
+            <input id="result" value="" readonly>
             <input type="hidden" name="formattedExpression" value="">
         </div>
         <button type="submit" th:id="calculate-btn">=</button>

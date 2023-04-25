@@ -21,38 +21,38 @@ public class CalculatorService {
             if (isNumeric(token)) {
                 values.push(Double.parseDouble(token));
             }
-            /* performOperation : 이항연산, performUnaryOperation : 단항연산 / */
+            /* performOp : 이항연산, performUnaryOp : 단항연산 / */
             else {
                 switch (token) {
                     case "+":
-                        performOperation(values, (a, b) -> a + b);
+                        performOp(values, (a, b) -> a + b);
                         break;
                     case "-":
-                        performOperation(values, (a, b) -> a - b);
+                        performOp(values, (a, b) -> a - b);
                         break;
                     case "*":
-                        performOperation(values, (a, b) -> a * b);
+                        performOp(values, (a, b) -> a * b);
                         break;
                     case "/":
-                        performOperation(values, (a, b) -> a / b);
+                        performOp(values, (a, b) -> a / b);
                         break;
                     case "^":
-                        performOperation(values, (a, b) -> Math.pow(a, b));
+                        performOp(values, (a, b) -> Math.pow(a, b));
                         break;
                     case "sin":
-                        performUnaryOperation(values, a -> Math.sin(a));
+                        performUnaryOp(values, a -> Math.sin(a));
                         break;
                     case "cos":
-                        performUnaryOperation(values, a -> Math.cos(a));
+                        performUnaryOp(values, a -> Math.cos(a));
                         break;
                     case "tan":
-                        performUnaryOperation(values, a -> Math.tan(a));
+                        performUnaryOp(values, a -> Math.tan(a));
                         break;
                     case "abs":
-                        performUnaryOperation(values, a -> Math.abs(a));
+                        performUnaryOp(values, a -> Math.abs(a));
                         break;
                     case "round":
-                        performUnaryOperation(values, a -> (double) Math.round(a));
+                        performUnaryOp(values, a -> (double) Math.round(a));
                         break;
                     default:
                         throw new Exception("Invalid token: " + token);
@@ -67,13 +67,13 @@ public class CalculatorService {
         return values.pop();
     }
 
-    private static void performOperation(Stack<Double> values, BiFunction<Double, Double, Double> operation) {
+    private static void performOp(Stack<Double> values, BiFunction<Double, Double, Double> operation) {
         double b = values.pop();
         double a = values.pop();
         values.push(operation.apply(a, b));
     }
 
-    private static void performUnaryOperation(Stack<Double> values, java.util.function.Function<Double, Double> operation) {
+    private static void performUnaryOp(Stack<Double> values, java.util.function.Function<Double, Double> operation) {
         double a = values.pop();
         values.push(operation.apply(a));
     }
