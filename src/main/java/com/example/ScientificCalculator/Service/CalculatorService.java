@@ -26,6 +26,7 @@ public class CalculatorService {
                 switch (token) {
                     case "+":
                         performOp(values, (a, b) -> a + b);
+                        System.out.println("더하기 쪼개기 성공");
                         break;
                     case "-":
                         performOp(values, (a, b) -> a - b);
