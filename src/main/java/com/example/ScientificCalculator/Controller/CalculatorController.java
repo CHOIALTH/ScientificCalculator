@@ -1,6 +1,8 @@
 package com.example.ScientificCalculator.Controller;
 
+import com.example.ScientificCalculator.ExpressionRequest;
 import com.example.ScientificCalculator.Service.CalculatorService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,7 +15,7 @@ import java.util.Map;
 
 @Controller
 public class CalculatorController {
-    private final CalculatorService calculator = new CalculatorService();
+    private final CalculatorService calculatorService = new CalculatorService();
 
     @GetMapping("/")
     public String calculatorMain(Model model){
@@ -21,22 +23,20 @@ public class CalculatorController {
         model.addAttribute("result", null);
         return "calculator";
     }
-
+    @PostMapping(value = "/calculate", consumes = "application/json", produces = "application/json")
     @ResponseBody
-    @PostMapping(value = "/calculate", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, Object>> calculate(@RequestBody Map<String, String> requestData) {
-        String formattedExpression = requestData.get("formattedExpression");
-        Map<String, Object> responseBody = new HashMap<>();
+    public ResponseEntity<Map<String, Object>> calculate(@RequestBody ExpressionRequest requestData) {
+        String expression = requestData.getExpression();
+        Map<String, Object> response = new HashMap<>();
         try {
-            System.out.println("Expression: " + formattedExpression);
-            Double result = calculator.calculate(formattedExpression);
-            responseBody.put("result", result); // 'calculationResult'를 다시 'result'로 변경해야 합니다.
+            double result = calculatorService.calculate(expression);
+            response.put("result", result);
+            System.out.println("result ok");
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-            responseBody.put("error", e.getMessage());
+            response.put("error", e.getMessage());
+            System.out.println("result error");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
-        return ResponseEntity.ok(responseBody);
     }
-
-
 }

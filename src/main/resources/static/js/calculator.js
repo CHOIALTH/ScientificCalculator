@@ -1,14 +1,16 @@
 const expressionElement = document.querySelector('#expression');
+        // .replace(/sin\(/g, "sin ")
+        // .replace(/cos\(/g, "cos ")
+        // .replace(/tan\(/g, "tan ")
+        // .replace(/abs\(/g, "abs ")
+        // .replace(/round\(/g, "round ")
+        // .replace(/log\(/g, "log ")
+        // .replace(/ln\(/g, "ln ")
 
 async function handleSubmit(event) {
+    // event.preventDefault();
+
     const formattedExpression = expressionElement.value
-        .replace(/sin\(/g, "sin ")
-        .replace(/cos\(/g, "cos ")
-        .replace(/tan\(/g, "tan ")
-        .replace(/abs\(/g, "abs ")
-        .replace(/round\(/g, "round ")
-        .replace(/log\(/g, "log ")
-        .replace(/ln\(/g, "ln ")
         .replace(/\^/g, " ^ ")
         .replace(/\+/g, " + ")
         .replace(/-/g, " - ")
@@ -19,7 +21,7 @@ async function handleSubmit(event) {
     console.log('Formatted expression:', formattedExpression);
 
     const requestData = {
-        formattedExpression: formattedExpression,
+        expression: formattedExpression
     };
     console.log('Request data:', requestData);
 
@@ -45,6 +47,7 @@ async function handleSubmit(event) {
 }
 
 
+
 function addToDisplay(value) {
     if (['(', ')', 'sin(', 'cos(', 'tan(', 'abs(', 'round(', 'log(', 'ln('].some(op => expressionElement.value.endsWith(op))) {
         expressionElement.value += value;
@@ -54,7 +57,6 @@ function addToDisplay(value) {
         expressionElement.value += value;
     }
 }
-
 
 function setOperator(operator) {
     expressionElement.value += operator;
