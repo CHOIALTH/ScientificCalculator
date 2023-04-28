@@ -1,23 +1,24 @@
 const expressionElement = document.querySelector('#expression');
-        // .replace(/sin\(/g, "sin ")
-        // .replace(/cos\(/g, "cos ")
-        // .replace(/tan\(/g, "tan ")
-        // .replace(/abs\(/g, "abs ")
-        // .replace(/round\(/g, "round ")
-        // .replace(/log\(/g, "log ")
-        // .replace(/ln\(/g, "ln ")
 
-async function handleSubmit(event) {
-    // event.preventDefault();
+async function handleSubmit(Event) {
+    Event.preventDefault();
 
     const formattedExpression = expressionElement.value
-        .replace(/\^/g, " ^ ")
-        .replace(/\+/g, " + ")
-        .replace(/-/g, " - ")
-        .replace(/\*/g, " * ")
-        .replace(/\//g, " / ")
-        .replace(/\(/g, " ( ")
-        .replace(/\)/g, " ) ");
+        .replace(/\s+/g, '') // 먼저 공백을 모두 제거합니다.
+        .replace(/\^/g, ' ^ ')
+        .replace(/\+/g, ' + ')
+        .replace(/(?<!e)-/g, ' - ') // 마이너스 기호 앞에 e가 없는 경우에만 공백을 추가합니다.
+        .replace(/\*/g, ' * ')
+        .replace(/\//g, ' / ')
+        .replace(/\(/g, ' ( ')
+        .replace(/\)/g, ' ) ')
+        .replace(/sin\(/g, 'sin (')
+        .replace(/cos\(/g, 'cos (')
+        .replace(/tan\(/g, 'tan (')
+        .replace(/abs\(/g, 'abs (')
+        .replace(/round\(/g, 'round (')
+        .replace(/log\(/g, 'log (')
+        .replace(/ln\(/g, 'ln (');
     console.log('Formatted expression:', formattedExpression);
 
     const requestData = {
@@ -25,12 +26,20 @@ async function handleSubmit(event) {
     };
     console.log('Request data:', requestData);
 
+    const num1 = document.querySelector('#num1').value;
+    const num2 = document.querySelector('#num2').value;
+    const operator = document.querySelector('#operator').value;
+
     const response = await fetch('/calculate', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify(requestData),
+        body: JSON.stringify({
+            num1: num1,
+            num2: num2,
+            operator: operator
+        })
     });
 
     if (response.ok) {
