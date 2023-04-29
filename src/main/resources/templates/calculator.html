@@ -17,52 +17,52 @@
             <input type="hidden" name="formattedExpression" value="">
         </div>
         <button type="submit" th:id="calculate-btn">=</button>
-            <!-- -->
-            <button type="button" style="height: 80px;" onclick="addToDisplay('abs')">abs</button>
-            <button type="button" onclick="addToDisplay('round')">round</button>
-            <button type="button" onclick="addToDisplay('floor')">floor</button>
-            <button type="button" id="delButton">del</button>
-            <button type="reset" onclick="resetState()">AC</button>
+        <!-- -->
+        <button type="button" style="height: 80px;" onclick="addToDisplay('abs')">abs</button>
+        <button type="button" onclick="addToDisplay('round')">round</button>
+        <button type="button" onclick="addToDisplay('floor')">floor</button>
+        <button type="button" id="delButton">del</button>
+        <button type="reset" onclick="resetState()">AC</button>
 
-            <button type="button" style="height: 80px;" onclick="addToDisplay('log')">log</button>
-            <button type="button" onclick="addToDisplay('ln')">ln</button>
-            <button type="button" onclick="addToDisplay('e')">e</button>
-            <button type="button" onclick="addToDisplay('√')">√</button>
-            <button type="button" onclick="addToDisplay('')">random</button> <!--난수-->
+        <button type="button" style="height: 80px;" onclick="addToDisplay('log')">log</button>
+        <button type="button" onclick="addToDisplay('ln')">ln</button>
+        <button type="button" onclick="addToDisplay('e')">e</button>
+        <button type="button" onclick="addToDisplay('√')">√</button>
+        <button type="button" onclick="addToDisplay('')">random</button> <!--난수-->
 
-            <button type="button" style="height: 80px;" onclick="addToDisplay('-')">(-)</button>
-            <button type="button" onclick="addToDisplay('sin')">sin()</button>
-            <button type="button" onclick="addToDisplay('cos')">cos()</button>
-            <button type="button" onclick="addToDisplay('tan')">tan()</button>
-            <button type="button" onclick="addToDisplay('π')">π</button>
+        <button type="button" style="height: 80px;" onclick="addToDisplay('-')">(-)</button>
+        <button type="button" onclick="addToDisplay('sin')">sin()</button>
+        <button type="button" onclick="addToDisplay('cos')">cos()</button>
+        <button type="button" onclick="addToDisplay('tan')">tan()</button>
+        <button type="button" onclick="addToDisplay('π')">π</button>
 
-            <!-- 숫자, 기본 연산 버튼 -->
-            <button type="button" onclick="addToDisplay('7')">7</button>
-            <button type="button" onclick="addToDisplay('8')">8</button>
-            <button type="button" onclick="addToDisplay('9')">9</button>
-            <div style="display: flex; height: 80px">
-                <button type="button" onclick="addToDisplay('+')" class="half-btn">+</button>
-                <button type="button" onclick="addToDisplay('-')" class="half-btn">-</button>
-            </div>
-            <div style="display: flex">
-                <button type="button" onclick="addToDisplay('*')" class="half-btn">*</button>
-                <button type="button" onclick="addToDisplay('/')" class="half-btn">/</button>
-            </div>
+        <!-- 숫자, 기본 연산 버튼 -->
+        <button type="button" onclick="addToDisplay('7')">7</button>
+        <button type="button" onclick="addToDisplay('8')">8</button>
+        <button type="button" onclick="addToDisplay('9')">9</button>
+        <div style="display: flex; height: 80px">
+            <button type="button" onclick="addToDisplay('+')" class="half-btn">+</button>
+            <button type="button" onclick="addToDisplay('-')" class="half-btn">-</button>
+        </div>
+        <div style="display: flex">
+            <button type="button" onclick="addToDisplay('*')" class="half-btn">*</button>
+            <button type="button" onclick="addToDisplay('/')" class="half-btn">/</button>
+        </div>
 
-            <button type="button" style="height: 80px;" onclick="addToDisplay('4')">4</button>
-            <button type="button" onclick="addToDisplay('5')">5</button>
-            <button type="button" onclick="addToDisplay('6')">6</button>
-            <div style="display: flex">
-                <button type="button" onclick="addToDisplay('(')" class="half-btn">(</button>
-                <button type="button" onclick="addToDisplay(')')" class="half-btn">)</button>
-            </div>
-            <button type="button" onclick="setOperator('^')">^</button>
+        <button type="button" style="height: 80px;" onclick="addToDisplay('4')">4</button>
+        <button type="button" onclick="addToDisplay('5')">5</button>
+        <button type="button" onclick="addToDisplay('6')">6</button>
+        <div style="display: flex">
+            <button type="button" onclick="addToDisplay('(')" class="half-btn">(</button>
+            <button type="button" onclick="addToDisplay(')')" class="half-btn">)</button>
+        </div>
+        <button type="button" onclick="setOperator('^')">^</button>
 
-            <button type="button" style="height: 80px;" onclick="addToDisplay('1')">1</button>
-            <button type="button" onclick="addToDisplay('2')">2</button>
-            <button type="button" onclick="addToDisplay('3')">3</button>
-            <button type="button" onclick="addToDisplay('0')">0</button>
-            <button type="button" onclick="addDecimal()">.</button>
+        <button type="button" style="height: 80px;" onclick="addToDisplay('1')">1</button>
+        <button type="button" onclick="addToDisplay('2')">2</button>
+        <button type="button" onclick="addToDisplay('3')">3</button>
+        <button type="button" onclick="addToDisplay('0')">0</button>
+        <button type="button" onclick="addDecimal()">.</button>
 
     </form>
     <script th:src="@{/js/calculator.js}"></script>
