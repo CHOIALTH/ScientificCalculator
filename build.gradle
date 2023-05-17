@@ -15,9 +15,12 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// exp4j : 수학 수식을 파싱하고 계산할 수 있는 강력한 라이브러리
+	implementation 'net.objecthunter:exp4j:0.4.8'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	// Thymeleaf
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
 
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
