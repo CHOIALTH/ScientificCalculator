@@ -1,90 +1,33 @@
 package com.example.ScientificCalculator.Service;
 
-import java.util.Stack;
-import java.util.function.BiFunction;
+import net.objecthunter.exp4j.Expression;
+import net.objecthunter.exp4j.ExpressionBuilder;
+import org.springframework.stereotype.Service;
 
+import java.util.Random;
+
+@Service
 public class CalculatorService {
-    public static double calculate(String expression) throws Exception {
-        // Stack 자료구조를 사용하여, String 타입의 데이터를 담을 수 있는 스택인 tokens을 생성하는 역할을 합니다.
-        Stack<String> tokens = new Stack<>();
-        String[] splittedTokens = expression.split("\\s+");
-
-        for (String token : splittedTokens) {
-            tokens.push(token);
-        }
-
-        Stack<Double> values = new Stack<>();
-
-        while (!tokens.isEmpty()) {
-            String token = tokens.pop();
-
-            if (isNumeric(token)) {
-                values.push(Double.parseDouble(token));
-            }
-            /* performOp : 이항연산, performUnaryOp : 단항연산 / */
-            else {
-                switch (token) {
-                    case "+":
-                        performOp(values, (a, b) -> a + b);
-                        System.out.println("더하기 쪼개기 성공");
-                        break;
-                    case "-":
-                        performOp(values, (a, b) -> a - b);
-                        break;
-                    case "*":
-                        performOp(values, (a, b) -> a * b);
-                        break;
-                    case "/":
-                        performOp(values, (a, b) -> a / b);
-                        break;
-                    case "^":
-                        performOp(values, (a, b) -> Math.pow(a, b));
-                        break;
-                    case "sin":
-                        performUnaryOp(values, a -> Math.sin(a));
-                        break;
-                    case "cos":
-                        performUnaryOp(values, a -> Math.cos(a));
-                        break;
-                    case "tan":
-                        performUnaryOp(values, a -> Math.tan(a));
-                        break;
-                    case "abs":
-                        performUnaryOp(values, a -> Math.abs(a));
-                        break;
-                    case "round":
-                        performUnaryOp(values, a -> (double) Math.round(a));
-                        break;
-                    default:
-                        throw new Exception("Invalid token: " + token);
-                }
-            }
-        }
-
-        if (values.size() != 1) {
-            throw new Exception("Invalid expression");
-        }
-
-        return values.pop();
-    }
-
-    private static void performOp(Stack<Double> values, BiFunction<Double, Double, Double> operation) {
-        double b = values.pop();
-        double a = values.pop();
-        values.push(operation.apply(a, b));
-    }
-
-    private static void performUnaryOp(Stack<Double> values, java.util.function.Function<Double, Double> operation) {
-        double a = values.pop();
-        values.push(operation.apply(a));
-    }
-
-    private static boolean isNumeric(String str) {
+    private final Random random = new Random();
+    public String calculate(String expression){
         try {
-            Double.parseDouble(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
+            expression = trans
+        } catch (Exception e){
+
+        }
+    }
+    private String transformExpressin(String expression){
+        // "^" -> "pow()"
+        while (expression.contains("^")){
+            int index = expression.indexOf("^");
+            int start = expression.lastIndexOf(" ", index) + 1;
+            int end = expression.indexOf(" ", index);
+            if(end == -1) {
+                end = expression.length();
+            }
+            String base = expression.substring(start, index);
+            String exponent = expression.substring(index + 1, end);
+            String
         }
     }
 }

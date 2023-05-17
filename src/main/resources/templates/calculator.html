@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Java Scientific Calculator</h1>
-    <form method="post" class="calculator" onsubmit="handleSubmit(Event);">
+    <form method="post" class="calculator" onsubmit="handleSubmit(e);">
         <!-- 결과값 출력 -->
         <div th:id="result-box">
             <input id="expression" name="expression" placeholder="이 곳에 수식을 입력해주세요" th:value="${expression}">

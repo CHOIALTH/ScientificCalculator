@@ -1,7 +1,7 @@
 const expressionElement = document.querySelector('#expression');
 
-async function handleSubmit(Event) {
-    Event.preventDefault();
+async function handleSubmit(e) {
+    e.preventDefault();
 
     const formattedExpression = expressionElement.value
         .replace(/\s+/g, '') // 먼저 공백을 모두 제거합니다.
