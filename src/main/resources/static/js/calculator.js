@@ -1,62 +1,5 @@
 const expressionElement = document.querySelector('#expression');
 
-async function handleSubmit(e) {
-    e.preventDefault();
-
-    const formattedExpression = expressionElement.value
-        .replace(/\s+/g, '') // 먼저 공백을 모두 제거합니다.
-        .replace(/\^/g, ' ^ ')
-        .replace(/\+/g, ' + ')
-        .replace(/(?<!e)-/g, ' - ') // 마이너스 기호 앞에 e가 없는 경우에만 공백을 추가합니다.
-        .replace(/\*/g, ' * ')
-        .replace(/\//g, ' / ')
-        .replace(/\(/g, ' ( ')
-        .replace(/\)/g, ' ) ')
-        .replace(/sin\(/g, 'sin (')
-        .replace(/cos\(/g, 'cos (')
-        .replace(/tan\(/g, 'tan (')
-        .replace(/abs\(/g, 'abs (')
-        .replace(/round\(/g, 'round (')
-        .replace(/log\(/g, 'log (')
-        .replace(/ln\(/g, 'ln (');
-    console.log('Formatted expression:', formattedExpression);
-
-    const requestData = {
-        expression: formattedExpression
-    };
-    console.log('Request data:', requestData);
-
-    const num1 = document.querySelector('#num1').value;
-    const num2 = document.querySelector('#num2').value;
-    const operator = document.querySelector('#operator').value;
-
-    const response = await fetch('/calculate', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            num1: num1,
-            num2: num2,
-            operator: operator
-        })
-    });
-
-    if (response.ok) {
-        const data = await response.json();
-        if (data.error) {
-            console.error('Calculation error:', data.error);
-            document.querySelector('#result').value = "Error";
-        } else {
-            document.querySelector('#result').value = data.result !== undefined ? data.result : "Error";
-        }
-    } else {
-        console.error('Failed to calculate:', response.status, response.statusText);
-    }
-}
-
-
-
 function addToDisplay(value) {
     if (['(', ')', 'sin(', 'cos(', 'tan(', 'abs(', 'round(', 'log(', 'ln('].some(op => expressionElement.value.endsWith(op))) {
         expressionElement.value += value;
@@ -99,7 +42,7 @@ document.querySelectorAll('button[type="button"]').forEach(button => {
     }
 });
 // 페이지의 DOM이 완전히 로드된 후 실행됨
-document.addEventListener('DOMContentLoaded', () => {
+/*document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.calculator').addEventListener('submit', handleSubmit);
-});
+});*/
 

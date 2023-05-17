@@ -1,6 +1,6 @@
 package com.example.ScientificCalculator;
 
-public class ExpressionRequest {
+/*public class ExpressionRequest {
     private String expression;
 
     public String getExpression() {
@@ -10,5 +10,5 @@ public class ExpressionRequest {
     public void setExpression(String expression) {
         this.expression = expression;
     }
-}
+}*/
 
